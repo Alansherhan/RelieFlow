@@ -2,6 +2,10 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { MapPin, HandHeart, ExternalLink } from 'lucide-react';
 
+const RELEASE_BASE_URL = 'https://github.com/Alansherhan/RelieFlow/releases/latest/download';
+const PUBLIC_APK_URL = `${RELEASE_BASE_URL}/public-app-release.apk`;
+const VOLUNTEER_APK_URL = `${RELEASE_BASE_URL}/volunteer-app-release.apk`;
+
 export function AppDownload() {
     return (
         <section id="volunteer-app" className="py-16 px-4 md:px-6 lg:px-8 bg-muted/30">
@@ -22,9 +26,9 @@ export function AppDownload() {
                             Request aid during emergencies, find relief centers near you, and track your assistance deliveries in real-time.
                         </p>
                         <Button className="rounded-full w-full" variant="outline" asChild>
-                            <Link href="https://github.com/rahul-p-v-2005/reliefflow-frontend/releases/download/v1.0.0/app-release.apk" className="gap-2">
+                            <Link href={PUBLIC_APK_URL} className="gap-2" target="_blank" rel="noopener noreferrer">
                                 <ExternalLink className="h-4 w-4" />
-                                Download App
+                                Download Public APK
                             </Link>
                         </Button>
                     </div>
@@ -44,9 +48,9 @@ export function AppDownload() {
                             Join our volunteer network, accept delivery tasks, help distribute relief supplies, and make a real difference.
                         </p>
                         <Button className="rounded-full w-full" variant="outline" asChild>
-                            <Link href="https://github.com/Alansherhan/volunteer_app/releases/download/v1.0.0/app-release.apk" className="gap-2">
+                            <Link href={VOLUNTEER_APK_URL} className="gap-2" target="_blank" rel="noopener noreferrer">
                                 <ExternalLink className="h-4 w-4" />
-                                Download App
+                                Download Volunteer APK
                             </Link>
                         </Button>
                     </div>

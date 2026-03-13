@@ -35,10 +35,12 @@ jobs:
       - name: Rename APK
         run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/volunteer-app-release.apk
 
-      - name: Upload Volunteer App APK to Release
-        uses: softprops/action-gh-release@v2
+      - name: Upload Volunteer App APK Artifact
+        uses: actions/upload-artifact@v4
         with:
-          files: Volunteer_App/build/app/outputs/flutter-apk/volunteer-app-release.apk
+          if-no-files-found: error
+          name: volunteer-apk
+          path: Volunteer_App/build/app/outputs/flutter-apk/volunteer-app-release.apk
 
   build-public-app:
     name: Build Public App APK
@@ -67,7 +69,29 @@ jobs:
       - name: Rename APK
         run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/public-app-release.apk
 
-      - name: Upload Public App APK to Release
+      - name: Upload Public App APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: error
+          name: public-apk
+          path: Public_App/build/app/outputs/flutter-apk/public-app-release.apk
+
+  upload-release-assets:
+    name: Upload APKs to Release
+    runs-on: ubuntu-latest
+    needs:
+      - build-volunteer-app
+      - build-public-app
+    steps:
+      - name: Download APK Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+
+      - name: Upload APKs to Release
         uses: softprops/action-gh-release@v2
         with:
-          files: Public_App/build/app/outputs/flutter-apk/public-app-release.apk
+          fail_on_unmatched_files: true
+          files: |
+            release-assets/volunteer-apk/volunteer-app-release.apk
+            release-assets/public-apk/public-app-release.apk
